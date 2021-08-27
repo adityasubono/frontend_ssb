@@ -2,10 +2,10 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
-import {registerSSB} from "../../actions/register_ssb";
+import {registerSSB} from "../../actions/registration";
 
 
-const RegisterSSB = ({ setAlert, registerSSB }) => {
+const RegistrationForm = ({ setAlert, registerSSB, history}) => {
 
     const initialState = {
         name: '',
@@ -52,6 +52,8 @@ const RegisterSSB = ({ setAlert, registerSSB }) => {
         //Validation Frontend Form Register
         if (calculate_age(dob) <= 13) {
             setAlert('Umur Minimal 13 Tahun', 'danger');
+        } else if (calculate_age(dob) > 20) {
+            setAlert('Umur Maksimal 20 Tahun', 'danger');
         } else if (height < 100) {
             setAlert('Tinggi Badan Minimal 100 cm', 'danger');
         } else if (height >= 200) {
@@ -66,7 +68,7 @@ const RegisterSSB = ({ setAlert, registerSSB }) => {
             setAlert('Alamat Tidak Boleh Kosong', 'danger');
         } else {
             clearState()
-            registerSSB({name, address, dob, height, weight, salary},);
+            registerSSB({name, address, dob, height, weight, salary}, history);
         }
     };
 
@@ -148,7 +150,7 @@ const RegisterSSB = ({ setAlert, registerSSB }) => {
     );
 };
 
-RegisterSSB.propTypes = {
+RegistrationForm.propTypes = {
     setAlert: PropTypes.func.isRequired,
     registerSSB: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool
@@ -158,4 +160,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { setAlert, registerSSB })(RegisterSSB);
+export default connect(mapStateToProps, { setAlert, registerSSB })(RegistrationForm);

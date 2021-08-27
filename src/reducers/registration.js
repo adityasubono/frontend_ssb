@@ -1,31 +1,31 @@
 import {
-    CLEAR_REGISTER,
-    GET_REGISTER_SSB
+    REGISTRATION_CLEAR,
+    GET_REGISTRATION
 } from '../actions/types';
 
 const initialState = {
-    register: null,
+    registration: null,
     loading: true,
     error: {}
 };
 
-function registerSSBReducer(state = initialState, action) {
+function registration(state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
-        case GET_REGISTER_SSB:
+        case GET_REGISTRATION:
             return {
                 ...state,
-                register: payload,
+                registration: payload,
                 loading: false
             };
-        case CLEAR_REGISTER:
+        case REGISTRATION_CLEAR:
             return {
-                register: payload,
+                registration: payload,
             };
         default:
             return state;
     }
 }
 
-export default registerSSBReducer;
+export default registration;

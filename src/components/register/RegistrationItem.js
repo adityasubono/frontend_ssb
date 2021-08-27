@@ -1,11 +1,11 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {deleteRegister} from "../../actions/register_ssb";
+import {deleteRegister} from "../../actions/registration";
 import {connect} from "react-redux";
 import formatDate from "../../utils/formatDate";
 
 
-const DataTableRegister = ({register_ssb: {_id, name, address, dob, height, weight, salary},deleteRegister}) => {
+const RegistrationItem = ({registration: {_id, name, address, dob, height, weight, salary},index, history, deleteRegister}) => {
 
     const convertRp = (nominal) => {
         const numb = nominal;
@@ -20,9 +20,14 @@ const DataTableRegister = ({register_ssb: {_id, name, address, dob, height, weig
         window.location.reload();
     }
 
+    useEffect(() => {
+        // refreshPage(); //calling getEducations()
+    }, [])
+
+
     return (
         <tr>
-            <td scope="row">1.</td>
+            <td scope="row">{index+1}.</td>
             <td>{name}</td>
             <td>{address}</td>
             <td>{formatDate(dob)}</td>
@@ -30,13 +35,13 @@ const DataTableRegister = ({register_ssb: {_id, name, address, dob, height, weig
             <td>{weight} kg</td>
             <td>{convertRp(salary)}</td>
             <td>
-                <a href={`/register-ssb/${_id}`} className='btn btn-primary'>
+                <a href={`/register/${_id}`} className='btn btn-primary'>
                 Edit
                 </a>
             </td>
             <td>
                 <button
-                    onClick={() => deleteRegister(_id)}
+                    onClick={() => deleteRegister(_id, history)}
                     className="btn btn-danger"
                 >
                     Delete
@@ -46,9 +51,9 @@ const DataTableRegister = ({register_ssb: {_id, name, address, dob, height, weig
     );
 }
 
-DataTableRegister.propTypes = {
-    register_ssb: PropTypes.object.isRequired,
+RegistrationItem.propTypes = {
+    registration: PropTypes.object.isRequired,
     deleteRegister: PropTypes.func.isRequired
 }
 
-export default connect(null, { deleteRegister })(DataTableRegister);
+export default connect(null, { deleteRegister })(RegistrationItem);

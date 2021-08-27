@@ -1,12 +1,13 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
 import {
-    REGISTER_SSB_SUCCESS,
-    REGISTER_SSB_FAILED,
-    REGISTER_SSB_LOADED,
+    REGISTRATION_SUCCESS,
+    REGISTRATION_FAILED,
+    REGISTRATION_LOADED,
     AUTH_ERROR,
-    GET_REGISTER_SSB,
-    REGISTER_SSB_ERROR, REGISTER_DELETE, PROFILE_ERROR, CLEAR_REGISTER
+    GET_REGISTRATION,
+    REGISTRATION_ERROR,
+    REGISTRATION_DELETED
 } from './types';
 
 // Load Data Register
@@ -15,7 +16,7 @@ export const loadRegisterSSB = () => async dispatch => {
         const res = await api.get('/auth');
 
         dispatch({
-            type: REGISTER_SSB_LOADED,
+            type: REGISTRATION_LOADED,
             payload: res.data
         });
     } catch (err) {
@@ -27,33 +28,35 @@ export const loadRegisterSSB = () => async dispatch => {
 
 // Get all registration
 export const getRegistration = () => async (dispatch) => {
-    // dispatch({ type: CLEAR_REGISTER_SSB });
+
     try {
         const res = await api.get('/register');
         console.log('res', res.data)
 
         dispatch({
-            type: GET_REGISTER_SSB,
+            type: GET_REGISTRATION,
             payload: res.data,
         });
     } catch (err) {
         dispatch({
-            type: REGISTER_SSB_ERROR,
+            type: REGISTRATION_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
 };
 
 // Create Register User
-export const registerSSB = formData => async dispatch => {
+export const registerSSB = (formData, history) => async dispatch => {
     try {
         const res = await api.post('/register', formData);
 
         dispatch({
-            type: REGISTER_SSB_SUCCESS,
+            type: REGISTRATION_SUCCESS,
             payload: res.data
         });
         dispatch(setAlert('Data Anda Berhasil Disimpan', 'success'));
+        dispatch(getRegistration())
+        history.push('/register-list')
     } catch (err) {
         const errors = err.response.data.errors;
 
@@ -62,7 +65,7 @@ export const registerSSB = formData => async dispatch => {
         }
 
         dispatch({
-            type: REGISTER_SSB_FAILED
+            type: REGISTRATION_FAILED
         });
     }
 };
@@ -73,12 +76,12 @@ export const getRegisterById = (userId) => async (dispatch) => {
         const res = await api.get(`/register/${userId}`);
 
         dispatch({
-            type: GET_REGISTER_SSB,
+            type: GET_REGISTRATION,
             payload: res.data
         });
     } catch (err) {
         dispatch({
-            type: REGISTER_SSB_ERROR,
+            type: REGISTRATION_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
@@ -92,17 +95,12 @@ export const editRegister = (formData, history, edit = false) => async (
         const res = await api.put('/register', formData);
         console.log('form data', formData)
 
-        dispatch({
-            type: GET_REGISTER_SSB,
-            payload: res.data
-        });
-
         dispatch(setAlert(edit ? 'Data Registrasi Berhasil Diubah' : 'Profile Created', 'success'));
         if (edit) {
-            dispatch({
-                type: GET_REGISTER_SSB,
-            });
-           
+            dispatch(getRegistration());
+            console.log("res.data",res.data)
+            history.push("/register-list")
+
         }
     } catch (err) {
         const errors = err.response.data.errors;
@@ -112,26 +110,29 @@ export const editRegister = (formData, history, edit = false) => async (
         }
 
         dispatch({
-            type: REGISTER_SSB_ERROR,
+            type: REGISTRATION_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
 };
 
 // Delete Registration
-export const deleteRegister = (id) => async (dispatch) => {
+export const deleteRegister = (id, history) => async (dispatch) => {
 
     try {
         const res = await api.delete(`/register/${id}`);
         dispatch({
-            type: REGISTER_DELETE,
+            type: REGISTRATION_DELETED,
             payload: res.data
         });
 
         dispatch(setAlert('Data Registrasi Berhasil Dihapus', 'success'));
+        dispatch(getRegistration());
+        console.log("res.data",res.data)
+        // history.push("/register-list")
     } catch (err) {
         dispatch({
-            type: REGISTER_SSB_ERROR,
+            type: REGISTRATION_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }

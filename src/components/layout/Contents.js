@@ -3,7 +3,7 @@ import {Grid} from "@material-ui/core";
 import Spinner from "./Spinner";
 import PropTypes from "prop-types";
 
-import Register_ssb from "../register/RegisterSSB";
+import Register_ssb from "../register/RegistrationForm";
 
 const Contents = ({ profile: {profiles, loading}}) => {
 

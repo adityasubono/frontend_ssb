@@ -15,10 +15,10 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
                 </Link>
             </li>
             <li>
-                <Link to="/register-ssb-list">Data Pendaftar</Link>
+                <Link to="/register-list">Data Pendaftar</Link>
             </li>
             <li>
-                <a onClick={logout} href="#!">
+                <a onClick={logout} href="/">
                     <i className="fas fa-sign-out-alt" />{' '}
                     <span className="hide-sm">Logout</span>
                 </a>

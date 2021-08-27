@@ -2,13 +2,13 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import {getRegistration} from "../../actions/register_ssb";
-import DataTableRegister from "./DataTableRegister";
+import {getRegistration} from "../../actions/registration";
+import RegistrationItem from "./RegistrationItem";
 
-const TableTalentaSSB = ({ getRegistration,register_ssb : { register, loading } }) => {
+const RegistrationList = ({ getRegistration, registration : { registration, loading } }) => {
     useEffect(() => {
         getRegistration();
-        console.log('registration',register);
+        console.log('registration',registration);
     }, [getRegistration]);
 
     return (
@@ -33,9 +33,9 @@ const TableTalentaSSB = ({ getRegistration,register_ssb : { register, loading } 
                         </tr>
                         </thead>
                         <tbody>
-                            {register.length > 0 ? (
-                                register.map(data => (
-                                    <DataTableRegister key={data._id} register_ssb={data} />
+                            {registration.length > 0 ? (
+                                registration.map((data,index) => (
+                                    <RegistrationItem key={data._id} registration={data} index={index} />
 
                                 ))
                             ) : (
@@ -56,15 +56,14 @@ const TableTalentaSSB = ({ getRegistration,register_ssb : { register, loading } 
     );
 };
 
-TableTalentaSSB.propTypes = {
+RegistrationList.propTypes = {
     getRegistration: PropTypes.func.isRequired,
-    register_ssb: PropTypes.object.isRequired
+    registration: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    register_ssb: state.register_ssb
+    registration: state.registration
 });
 
 export default connect(
-    mapStateToProps, { getRegistration }
-)(TableTalentaSSB);
+    mapStateToProps, { getRegistration })(RegistrationList);

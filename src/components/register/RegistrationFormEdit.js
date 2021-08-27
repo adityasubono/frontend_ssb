@@ -2,9 +2,10 @@ import React,{Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from "react-router-dom";
 import { connect } from "react-redux";
-import {getRegisterById, editRegister} from "../../actions/register_ssb";
+import {getRegisterById, editRegister} from "../../actions/registration";
+import registration from "../../reducers/registration";
 
-const RegisterEdit = ({ register_ssb: { register, loading }, getRegisterById,
+const RegistrationFormEdit = ({ registration: { registration, loading }, getRegisterById,
                           editRegister, history, match }) => {
     const [formData, setFormData] = useState({
         _id: "",
@@ -22,13 +23,13 @@ const RegisterEdit = ({ register_ssb: { register, loading }, getRegisterById,
         getRegisterById(match.params.id);
 
         setFormData({
-            _id: loading || !register._id ? '' : register._id,
-            name: loading || !register.name ? '' : register.name,
-            address: loading || !register.address ? '' : register.address,
-            dob: loading || !register.dob ? '' : register.dob,
-            height: loading || !register.height ? '' : register.height,
-            weight: loading || !register.weight ? '' : register.weight,
-            salary: loading || !register.salary ? '' : register.salary,
+            _id: loading || !registration._id ? '' : registration._id,
+            name: loading || !registration.name ? '' : registration.name,
+            address: loading || !registration.address ? '' : registration.address,
+            dob: loading || !registration.dob ? '' : registration.dob,
+            height: loading || !registration.height ? '' : registration.height,
+            weight: loading || !registration.weight ? '' : registration.weight,
+            salary: loading || !registration.salary ? '' : registration.salary,
         })
     }, [loading, getRegisterById]);
 
@@ -51,6 +52,7 @@ const RegisterEdit = ({ register_ssb: { register, loading }, getRegisterById,
     const onSubmit = e => {
         e.preventDefault();
         editRegister(formData, history, true);
+        console.log("history",history)
     };
 
 
@@ -128,14 +130,12 @@ const RegisterEdit = ({ register_ssb: { register, loading }, getRegisterById,
     );
 }
 
-RegisterEdit.propTypes = {
-    registerSSB: PropTypes.func.isRequired,
-    getCurrentRegister: PropTypes.func.isRequired,
-    register_ssb: PropTypes.object.isRequired,
+RegistrationFormEdit.propTypes = {
+    registration: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-    register_ssb: state.register_ssb
+    registration: state.registration
 });
 
-export default connect(mapStateToProps, {editRegister, getRegisterById})(withRouter(RegisterEdit));
+export default connect(mapStateToProps, {editRegister, getRegisterById})(withRouter(RegistrationFormEdit));
