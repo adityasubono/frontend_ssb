@@ -17,10 +17,10 @@ const Routes = props => {
             <Alert />
             <Switch>
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/register_ssb" component={Register_ssb} />
-                <Route exact path="/register_ssb/:id" component={RegisterEdit} />
+                <Route exact path="/register-ssb" component={Register_ssb} />
+                <Route exact path="/register-ssb/:id" component={RegisterEdit} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/profiles" component={TableTalentaSSB} />
+                <Route exact path="/register-ssb-list" component={TableTalentaSSB} />
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
 
                 <Route component={NotFound} />

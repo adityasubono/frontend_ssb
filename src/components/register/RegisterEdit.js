@@ -1,6 +1,6 @@
 import React,{Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {Link, Redirect, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import { connect } from "react-redux";
 import {getRegisterById, editRegister} from "../../actions/register_ssb";
 

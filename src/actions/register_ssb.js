@@ -98,10 +98,11 @@ export const editRegister = (formData, history, edit = false) => async (
         });
 
         dispatch(setAlert(edit ? 'Data Registrasi Berhasil Diubah' : 'Profile Created', 'success'));
-
         if (edit) {
-            console.log('history')
-            history.push('/dashboard');
+            dispatch({
+                type: GET_REGISTER_SSB,
+            });
+           
         }
     } catch (err) {
         const errors = err.response.data.errors;

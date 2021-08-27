@@ -15,7 +15,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
                 </Link>
             </li>
             <li>
-                <Link to="/profiles">Data Pendaftar</Link>
+                <Link to="/register-ssb-list">Data Pendaftar</Link>
             </li>
             <li>
                 <a onClick={logout} href="#!">

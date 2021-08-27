@@ -30,7 +30,7 @@ const DataTableRegister = ({register_ssb: {_id, name, address, dob, height, weig
             <td>{weight} kg</td>
             <td>{convertRp(salary)}</td>
             <td>
-                <a href={`/register_ssb/${_id}`} className='btn btn-primary'>
+                <a href={`/register-ssb/${_id}`} className='btn btn-primary'>
                 Edit
                 </a>
             </td>
